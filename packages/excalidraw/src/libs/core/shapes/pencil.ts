@@ -40,6 +40,7 @@ export class Pencil extends Shape {
       width: this.options.width,
       height: this.options.height,
       strokeStyle: "#8884f5",
+      fillColor: "transparent",
     });
     rect.draw();
   }
