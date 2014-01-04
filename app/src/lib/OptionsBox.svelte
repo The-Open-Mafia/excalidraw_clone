@@ -8,24 +8,33 @@
   import { config } from "@excalidraw_clone/excalidraw";
 
   const strokeColors = ["#1e1e1e", "#e03131", "#2f9e44", "#1971c2", "#f08c00"];
+  const fillColors = ["#1e1e1e", "#e03131", "#2f9e44", "#1971c2", "#f08c00"];
 
   let isShapeSelected = $state(false);
-  let selectedStokeColor = $state(strokeColors[0]);
+  let selectedStrokeColor = $state(strokeColors[0]);
+  let selectedFillColor = $state(strokeColors[0]);
   let selectedShape: Shape;
   const { on } = useEmitter();
 
   on("shapeSelected", (shape) => {
     isShapeSelected = !!shape;
     if (!shape) return;
-    
+
     selectedShape = shape;
-    selectedStokeColor = selectedShape.options.strokeStyle
+    selectedStrokeColor = selectedShape.options.strokeStyle;
+    selectedFillColor = selectedShape.options.fillStyle;
   });
 
   function handleChangeStrokeColor(color: string) {
-    selectedStokeColor = color;
+    selectedStrokeColor = color;
     config.strokeStyle = color;
     updateSelectedShape(selectedShape.id, { strokeStyle: color });
+  }
+
+  function handleChangeFillColor(color: string) {
+    selectedFillColor = color;
+    config.fillColor = color;
+    updateSelectedShape(selectedShape.id, { fillColor: color });
   }
 </script>
 
@@ -42,7 +51,19 @@
           </button>
         {/each}
         <div class="h-4 w-px bg-gray-300 self-center"></div>
-        <ColorPickerButton color={selectedStokeColor} />
+        <ColorPickerButton color={selectedStrokeColor} />
+      </div>
+    </div>
+    <div>
+      <h3 class="mb-1">Fill color</h3>
+      <div class="grid py-1 grid-cols-7 gap-0.5">
+        {#each fillColors as color}
+          <button onclick={() => handleChangeFillColor(color)}>
+            <ColorPickerButton {color} />
+          </button>
+        {/each}
+        <div class="h-4 w-px bg-gray-300 self-center"></div>
+        <ColorPickerButton color={selectedFillColor} />
       </div>
     </div>
   </div>
