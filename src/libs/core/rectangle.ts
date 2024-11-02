@@ -20,10 +20,13 @@ export class Rectangle extends Shape {
     lineWidth: 1,
     strokeStyle: "red",
   };
-  isSelected: boolean = false;
+
+  isSelected: boolean;
 
   constructor(options: RectangleOptions) {
     super(window.ctx, "rectangle");
+
+    this.isSelected = true;
     Object.assign(this.options, { ...config, ...options });
   }
 
@@ -90,7 +93,7 @@ export class Rectangle extends Shape {
         position.a[0] <= ev.offsetX &&
         ev.offsetX <= position.b[0] &&
         position.a[1] < ev.offsetY &&
-        ev.offsetY < position.d[1] 
+        ev.offsetY < position.d[1]
       )
         return true;
     }

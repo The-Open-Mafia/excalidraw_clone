@@ -11,11 +11,7 @@ let currentShape: Shape;
 export function startDrawing(ev: MouseEvent) {
   const { isDrawing, cursor } = useDraw();
 
- isDrawing.value = true;
-
-  cursor.initial.x = ev.offsetX;
-  cursor.initial.y = ev.offsetY;
-
+  isDrawing.value = true;
   //   currentPath = [{ x: ev.offsetX, y: ev.offsetY }];
 }
 
@@ -49,13 +45,16 @@ export function draw(ev: MouseEvent) {
 
 export function redrawShapes() {
   const { shapes } = useDraw();
-  shapes.value.forEach((shape) => {
-    shape.isSelected = false;
-    shape.draw();
+  shapes.value.forEach((shp) => {
+    shp.draw();
   });
 }
 
-function clearAndRedraw() {
+export function clear() {
   window.ctx.clearRect(0, 0, innerWidth, innerHeight);
+}
+
+export function clearAndRedraw() {
+  clear();
   redrawShapes();
 }

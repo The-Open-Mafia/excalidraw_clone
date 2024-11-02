@@ -3,11 +3,17 @@ import { Shape } from "../shape";
 
 interface ShapeStore {
   currentShape?: Shape;
+  selectedShape: {
+    id?: string;
+    originalX?: number;
+    originalY?: number;
+  };
 }
 
 export const shape = reactive<ShapeStore>(
   {
     currentShape: undefined,
+    selectedShape: {},
   },
   [
     (newVal) => {

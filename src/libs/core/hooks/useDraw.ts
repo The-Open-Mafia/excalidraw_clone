@@ -10,6 +10,7 @@ let _useDraw: {
   shapes: Ref<Shape[]>;
   addShape: (shape: Shape) => void;
   reset: () => void;
+  persist: () => void;
 };
 function useDraw() {
   if (_useDraw) return _useDraw;
@@ -31,6 +32,9 @@ function useDraw() {
   function addShape(shape: Shape) {
     if (!shapes.value.find((shp) => shp.id === shape.id))
       shapes.value.push(shape);
+    persist();
+  }
+  function persist() {
     localStorage.excalidraw = JSON.stringify(shapes.value);
   }
   function reset() {
@@ -38,8 +42,7 @@ function useDraw() {
     localStorage.clear();
     redrawShapes();
   }
-
-  _useDraw = { cursor, isDrawing, shapes, addShape, reset };
+  _useDraw = { cursor, isDrawing, shapes, addShape, reset, persist };
   return _useDraw;
 }
 

@@ -23,15 +23,13 @@ export abstract class Shape implements ShapeInterface {
     this.id = uuid();
   }
 
-  translate(cursor: Cursor) {
-    if (!this.isSelected || !this.options.x || !this.options.y) return;
-    console.log("HMF", cursor.current.x - cursor.initial.x);
-    
-    this.options.x += cursor.current.x - cursor.initial.x;
-    this.options.y += cursor.current.y - cursor.initial.y;
-
-    this.draw()
+  translate(x: number, y: number) {
+    if (!this.isSelected) return;
+    this.options.x = x;
+    this.options.y = y;
+    this.draw();
   }
+
   protected abstract drawSeletionBox(): void;
   abstract isSelected: boolean;
   abstract checkCollision(ev: MouseEvent): boolean;
