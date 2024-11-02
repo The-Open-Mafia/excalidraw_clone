@@ -1,3 +1,4 @@
+import { clear } from "./libs/core/functions";
 import { useDraw } from "./libs/core/hooks";
 import { init } from "./libs/core/init";
 import { ref } from "./libs/core/reactivity/ref";
@@ -8,10 +9,10 @@ import { createIcons, icons } from "lucide";
 
 const canvas = document.querySelector("canvas")!;
 const strokeColorInput = document.querySelector(
-  "#strokeColor"
+  "#strokeColor",
 )! as HTMLInputElement;
 const strokeWidthInput = document.querySelector(
-  "#strokeWidth"
+  "#strokeWidth",
 )! as HTMLInputElement;
 const trashButton = document.querySelector("#trash")! as HTMLInputElement;
 const ctx = canvas.getContext("2d")!;
@@ -28,6 +29,11 @@ const tools = [
     title: "Line",
     icon: "minus",
     value: Action.LINE,
+  },
+  {
+    title: "Pencil",
+    icon: "pencil",
+    value: Action.FREEDRAW,
   },
 ];
 const selectedTool = ref<Action>(Action.RECTANGLE);
@@ -92,6 +98,7 @@ addEventListener("DOMContentLoaded", () => {
   trashButton.addEventListener("click", () => {
     const { reset } = useDraw();
     reset();
+    clear();
   });
   // ------------------- Tool End --------------------
 });

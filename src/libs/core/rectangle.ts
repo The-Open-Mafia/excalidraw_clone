@@ -38,6 +38,7 @@ export class Rectangle extends Shape {
 
       this.options.width = cursor.current.x - cursor.initial.x;
       this.options.height = cursor.current.y - cursor.initial.y;
+      cursor.type = "cross";
     }
 
     this.ctx.beginPath();

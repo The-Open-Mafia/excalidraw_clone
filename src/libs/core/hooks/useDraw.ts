@@ -23,10 +23,10 @@ function useDraw() {
     },
     [
       ({ type }) => {
-        if (type === "pencil") document.body.style.cursor = "crosshair";
+        if (type === "cross") document.body.style.cursor = "crosshair";
         else document.body.style.cursor = "default";
       },
-    ]
+    ],
   );
 
   function addShape(shape: Shape) {

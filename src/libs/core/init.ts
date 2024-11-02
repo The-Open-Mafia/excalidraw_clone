@@ -1,3 +1,4 @@
+import { shapeMappers } from "../../constants";
 import {
   clearAndRedraw,
   draw,
@@ -19,8 +20,6 @@ export function init(canvas: HTMLCanvasElement) {
 
   if (localStorage.excalidraw)
     shapes.value.push(...parseShapes(JSON.parse(localStorage.excalidraw)));
-
-  console.log(shapes.value);
 
   redrawShapes();
 
@@ -54,20 +53,13 @@ export function init(canvas: HTMLCanvasElement) {
       shape.selectedShape.originalY = shape.currentShape.options.y;
       shape.currentShape.isSelected = true;
       shape.currentShape.draw();
-      persist();
-      return;
     }
+    persist();
   }
 }
 
 // TODO Refactor me
 function parseShapes(shapes: Shape[]): Shape[] {
-  const shapeMappers: Record<string, Shape> = {
-    // @ts-ignore
-    rectangle: Rectangle,
-    // @ts-ignore
-    line: Line,
-  };
   return shapes.map((shape) => {
     // @ts-ignore
     const nshape = new shapeMappers[shape.type](shape.options);

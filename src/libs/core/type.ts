@@ -7,6 +7,7 @@ export type Ref<T> = {
 export enum Action {
   RECTANGLE = "RECTANGLE",
   LINE = "LINE",
+  FREEDRAW = "FREEDRAW",
 }
 
 export interface Position {
@@ -17,7 +18,7 @@ export interface Position {
 export interface Cursor {
   initial: Position;
   current: Position;
-  type?: "pencil";
+  type?: "pencil" | "cross";
 }
 // export type Shape = {
 //   id: string;
