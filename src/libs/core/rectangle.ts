@@ -26,7 +26,7 @@ export class Rectangle extends Shape {
   constructor(options: RectangleOptions) {
     super(window.ctx, "rectangle");
 
-    this.isSelected = true;
+    this.isSelected = false;
     Object.assign(this.options, { ...config, ...options });
   }
 
@@ -51,7 +51,7 @@ export class Rectangle extends Shape {
       this.options.y!,
       this.options.width!,
       this.options.height!,
-      4
+      4,
     );
     this.ctx.fill();
     this.ctx.stroke();
@@ -72,7 +72,7 @@ export class Rectangle extends Shape {
       this.options.y! - offset,
       this.options.width! + offset * 2,
       this.options.height! + offset * 2,
-      8
+      8,
     );
     this.ctx.stroke();
   }

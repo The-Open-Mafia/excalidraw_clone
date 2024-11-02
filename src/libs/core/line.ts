@@ -10,9 +10,6 @@ export interface LineOptions {
   lineWidth?: number;
 }
 export class Line extends Shape {
-  protected drawSeletionBox(): void {
-    throw new Error("Method not implemented.");
-  }
   public isSelected: boolean = false;
 
   public options: LineOptions = {
@@ -25,15 +22,63 @@ export class Line extends Shape {
     if (!this.options.lineWidth) this.options.lineWidth = this.ctx?.lineWidth;
   }
 
-  checkCollision(_ev: MouseEvent): boolean {
+  protected drawSeletionBox(): void {
+    if (!this.ctx) return;
+
+    const offset = 6;
+    this.ctx.strokeStyle = "#8884f5";
+
+    this.ctx.roundRect(
+      this.options.x! - offset,
+      this.options.y! - offset,
+
+      Math.abs(this.options.x! - this.options.endX!) + offset * 2,
+      Math.abs(this.options.y! - this.options.endY!) + offset * 2,
+      8,
+    );
+    this.ctx.stroke();
+  }
+
+  translate(x: number, y: number) {
+    if (!this.isSelected) return;
+    const gapX = Math.abs(this.options.x! - this.options.endX!);
+    const gapY = Math.abs(this.options.y! - this.options.endY!);
+    this.options.x = x;
+    this.options.y = y;
+
+    this.options.endX = x + gapX;
+    this.options.endY = y + gapY;
+    this.draw();
+  }
+
+  checkCollision(ev: MouseEvent): boolean {
+    const minimumGap = 14;
+    // TODO wtf i don't even understand
+    // Check if the line is almost straight
+    if (
+      Math.abs(this.options.x! - this.options.endX!) < minimumGap ||
+      Math.abs(this.options.y! - this.options.endY!) < minimumGap
+    )
+      return (
+        Math.abs(this.options.x! - ev.offsetX) < minimumGap / 2 ||
+        Math.abs(this.options.y! - ev.offsetY) < minimumGap / 2
+      );
+    // Check mouse is on the rect created by the line
+
+    return (
+      this.options.x! < ev.offsetX &&
+      ev.offsetX < this.options.endX! &&
+      this.options.y! < ev.offsetY &&
+      ev.offsetY < this.options.endY!
+    );
     // const slope =
-    //   (this.options.endY! - this.options.y!) /
+    //   (-this.options.endY! + this.options.y!) /
     //   (this.options.endX! - this.options.x!);
     // const gap = this.options.y! - slope * this.options.x!;
     // console.log(slope, "x+", gap);
 
-    // return slope * ev.offsetX + gap - ev.offsetY === 0;
-    return false;
+    // return slope * ev.offsetX + gap + ev.offsetY === 0;
+    // return false;
   }
   draw(cursor?: Cursor) {
     if (!this.ctx) return;
@@ -51,5 +96,9 @@ export class Line extends Shape {
     this.ctx.strokeStyle = this.options.strokeStyle!;
     this.ctx.lineWidth = this.options.lineWidth!;
     this.ctx.stroke();
+
+    if (this.isSelected) {
+      this.drawSeletionBox();
+    }
   }
 }
