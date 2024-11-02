@@ -25,7 +25,7 @@ export class Line extends Shape {
     if (!this.options.lineWidth) this.options.lineWidth = this.ctx?.lineWidth;
   }
 
-  checkCollision(ev: MouseEvent): boolean {
+  checkCollision(_ev: MouseEvent): boolean {
     // const slope =
     //   (this.options.endY! - this.options.y!) /
     //   (this.options.endX! - this.options.x!);

@@ -4,12 +4,12 @@ import { Rectangle } from "../rectangle";
 import { Shape } from "../shape";
 import { Action } from "../type";
 
-let currentPath = [];
-let points: number[][] = [];
+// let currentPath = [];
+// let points: number[][] = [];
 let currentShape: Shape;
 
-export function startDrawing(ev: MouseEvent) {
-  const { isDrawing, cursor } = useDraw();
+export function startDrawing(_ev: MouseEvent) {
+  const { isDrawing } = useDraw();
 
   isDrawing.value = true;
   //   currentPath = [{ x: ev.offsetX, y: ev.offsetY }];
