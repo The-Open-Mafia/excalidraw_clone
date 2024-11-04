@@ -1,3 +1,4 @@
+import { useEmitter } from "../core/hooks";
 import { reactive } from "../core/reactivity/reactive";
 import { Shape } from "../core/shapes/shape";
 
@@ -19,6 +20,10 @@ export const shape = reactive<ShapeStore>(
     (newVal) => {
       if (newVal.currentShape) document.body.style.cursor = "all-scroll";
       else document.body.style.cursor = "default";
+    },
+    (newVal, key) => {
+      if (key === "selectedShape")
+        useEmitter().emit("shapeSelected", newVal.currentShape);
     },
   ],
 );

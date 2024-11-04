@@ -12,6 +12,7 @@ import {
 import { useDraw } from "./core/hooks";
 import { Shape } from "./core/shapes";
 import { Action } from "./core/type";
+import { initializeEvents } from "./event";
 import { shape } from "./stores/shape";
 
 export function init(canvas: HTMLCanvasElement) {
@@ -46,19 +47,25 @@ export function init(canvas: HTMLCanvasElement) {
     stopMoving();
   });
   canvas.addEventListener("click", handleClick);
+
   function handleClick() {
     shapes.value.map((s) => (s.isSelected = false));
     clearAndRedraw();
 
     if (shape.currentShape) {
-      shape.selectedShape.id = shape.currentShape.id;
-      shape.selectedShape.originalX = shape.currentShape.options.x;
-      shape.selectedShape.originalY = shape.currentShape.options.y;
+      shape.selectedShape = {
+        id: shape.currentShape.id,
+        originalX: shape.currentShape.options.x,
+        originalY: shape.currentShape.options.y,
+      };
+
       shape.currentShape.isSelected = true;
       shape.currentShape.draw();
-    }
+    } else shape.selectedShape = {};
     persist();
   }
+
+  initializeEvents();
 }
 
 // TODO Refactor me

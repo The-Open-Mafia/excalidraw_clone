@@ -16,6 +16,12 @@
     "isolatedModules": true,
     "moduleDetection": "force"
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.svelte",
+    "../packages/excalidraw/src/libs/event.ts",
+    "../packages/excalidraw/src/libs/event.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

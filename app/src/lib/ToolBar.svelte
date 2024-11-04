@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Action } from "@excalidraw_clone/excalidraw";
-  import { Minus, Pencil, Square } from "lucide-svelte";
+  import { useEmitter } from "@excalidraw_clone/excalidraw";
+  import { Minus, Pencil, Square, Trash } from "lucide-svelte";
+  const { emit } = useEmitter();
 
   interface Tool {
     title: string;
@@ -30,11 +32,20 @@
     window.action = tool.value;
     selectedTool = tool;
   }
+
+  function handleReset() {
+    emit("reset");
+  }
 </script>
 
 <ul
   class="absolute left-1/2 -translate-x-1/2 rounded-lg bg-white flex p-1 top-5 tools"
 >
+  <button onclick={handleReset}>
+    <li class="tool" title="Reset">
+      <Trash size={16} />
+    </li>
+  </button>
   {#each tools as tool, index}
     <button onclick={() => handleChangeAction(tool)}>
       <li

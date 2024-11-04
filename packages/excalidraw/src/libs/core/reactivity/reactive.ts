@@ -1,6 +1,6 @@
 export function reactive<T extends object>(
   obj: T,
-  effects: ((newValue: T) => void)[] = [],
+  effects: ((newValue: T, key: keyof T, value: T[keyof T]) => void)[] = [],
 ) {
   return new Proxy<T>(obj, {
     get(target, key) {
@@ -8,7 +8,7 @@ export function reactive<T extends object>(
     },
     set(target, key, value) {
       target[key as keyof T] = value;
-      effects.forEach((eff) => eff(target));
+      effects.forEach((eff) => eff(target, key as keyof T, value));
       return true;
     },
   });

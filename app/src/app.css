@@ -13,5 +13,5 @@ body {
     Helvetica,
     Arial,
     sans-serif;
-  @apply h-screen w-screen;
+  @apply h-screen w-screen text-xs;
 }

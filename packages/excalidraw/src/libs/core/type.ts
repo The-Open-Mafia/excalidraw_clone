@@ -1,3 +1,5 @@
+import { Shape } from "./shapes";
+
 export type Ref<T> = {
   value: T;
   effects: ((newValue: T) => void)[];
@@ -43,6 +45,11 @@ export interface Cursor {
 // );
 
 export type UnsubscribeCallback = () => void;
+
+export type Events = {
+  reset: undefined;
+  shapeSelected?: Shape;
+};
 
 declare global {
   interface Window {
