@@ -37,3 +37,18 @@ export function moveShape(ev: MouseEvent) {
     oldY + (cursor.current.y - cursor.initial.y),
   );
 }
+
+export function updateSelectedShape(
+  shapeId: string,
+  options: Record<string, any>,
+) {
+  const { shapes } = useDraw();
+  const findedIndex = shapes.value.findIndex((shp) => shp.id === shapeId);
+  if (findedIndex)
+    shapes.value[findedIndex].options = {
+      ...shapes.value[findedIndex].options,
+      ...options,
+    };
+
+  clearAndRedraw();
+}

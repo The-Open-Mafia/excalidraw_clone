@@ -1,13 +1,32 @@
 <script lang="ts">
-  import { useEmitter } from "@excalidraw_clone/excalidraw";
+  import {
+    Shape,
+    updateSelectedShape,
+    useEmitter,
+  } from "@excalidraw_clone/excalidraw";
   import ColorPickerButton from "./ColorPickerButton.svelte";
+  import { config } from "@excalidraw_clone/excalidraw";
 
-  let isShapeSelected = $state(true);
+  const strokeColors = ["#1e1e1e", "#e03131", "#2f9e44", "#1971c2", "#f08c00"];
+
+  let isShapeSelected = $state(false);
+  let selectedStokeColor = $state(strokeColors[0]);
+  let selectedShape: Shape;
   const { on } = useEmitter();
 
   on("shapeSelected", (shape) => {
     isShapeSelected = !!shape;
+    if (!shape) return;
+    
+    selectedShape = shape;
+    selectedStokeColor = selectedShape.options.strokeStyle
   });
+
+  function handleChangeStrokeColor(color: string) {
+    selectedStokeColor = color;
+    config.strokeStyle = color;
+    updateSelectedShape(selectedShape.id, { strokeStyle: color });
+  }
 </script>
 
 {#if isShapeSelected}
@@ -16,8 +35,14 @@
   >
     <div>
       <h3 class="mb-1">Stroke</h3>
-      <div class="grid py-1">
-        <ColorPickerButton />
+      <div class="grid py-1 grid-cols-7 gap-0.5">
+        {#each strokeColors as color}
+          <button onclick={() => handleChangeStrokeColor(color)}>
+            <ColorPickerButton {color} />
+          </button>
+        {/each}
+        <div class="h-4 w-px bg-gray-300 self-center"></div>
+        <ColorPickerButton color={selectedStokeColor} />
       </div>
     </div>
   </div>
