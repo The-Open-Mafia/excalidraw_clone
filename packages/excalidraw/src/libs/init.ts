@@ -72,7 +72,7 @@ export function init(canvas: HTMLCanvasElement) {
 function parseShapes(shapes: Shape[]): Shape[] {
   return shapes.map((shape) => {
     // @ts-ignore
-    const nshape = new shapeMappers[shape.type](shape.options);
+    const nshape: Shape = new shapeMappers[shape.type](shape.options);
     nshape.id = shape.id;
     nshape.isSelected = shape.isSelected;
 

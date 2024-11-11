@@ -44,11 +44,12 @@ export function updateSelectedShape(
 ) {
   const { shapes } = useDraw();
   const findedIndex = shapes.value.findIndex((shp) => shp.id === shapeId);
-  if (findedIndex)
+  if (findedIndex !== -1) {
     shapes.value[findedIndex].options = {
       ...shapes.value[findedIndex].options,
       ...options,
     };
+  }
 
-  clearAndRedraw();
+  // clearAndRedraw();
 }
