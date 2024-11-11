@@ -51,5 +51,5 @@ export function updateSelectedShape(
     };
   }
 
-  // clearAndRedraw();
+  clearAndRedraw();
 }
